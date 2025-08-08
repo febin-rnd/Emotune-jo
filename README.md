@@ -1,30 +1,77 @@
-# Song emotion generator
+<img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/febinrnd-3259s-projects/v0-song-emotion-generator)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/AYlwOZbWyKs)
+# [Project Name] emotune
 
-## Overview
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## Basic Details
+### Team Name: [farha febin kc]
 
-## Deployment
 
-Your project is live at:
+### Team Members
+- Team Lead: [farha febin kc] - [kahm unity womens college manjeri]
+- Member 2: [Name] - [College]
+- Member 3: [Name] - [College]
 
-**[https://vercel.com/febinrnd-3259s-projects/v0-song-emotion-generator](https://vercel.com/febinrnd-3259s-projects/v0-song-emotion-generator)**
+### Project Description
+[**Emotune** is a web app that analyzes songs (via MP3 upload or Spotify link) and visualizes emotions line-by-line using emojis, quotes, and dynamic background themes. It enhances listening with synced emotional feedback for each lyric.
+]
 
-## Build your app
+### The Problem (that doesn't exist)
+[What ridiculous problem are you solving?]
 
-Continue building your app on:
+### The Solution (that nobody asked for)
+[How are you solving it? Keep it fun!]
 
-**[https://v0.dev/chat/projects/AYlwOZbWyKs](https://v0.dev/chat/projects/AYlwOZbWyKs)**
+## Technical Details
+### Technologies/Components Used
+For Software:
+- [typescript]
+- [next.config.mjs]
+- 
+- [ pnpm-lock.yaml]
 
-## How It Works
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+
+### Implementation
+For Software:
+# Installation
+npm install
+node install 
+
+# Run
+npm dev
+nove -v 
+npm -v 
+
+
+### Project Documentation
+For Software:
+
+# Screenshots (Add at least 3)
+https://drive.google.com/file/d/18H2PrXQ_9wRQh0KknKPIZzMN29JP4j-W/view?usp=sharing
+*Add caption explaining what this shows*
+https://drive.google.com/file/d/1_b5Lj2c18TxvAA0X9NqXieMiSjan3kQL/view?usp=sharing(Add screenshot 2 here with proper name)
+*Add caption explaining what this shows
+
+https://drive.google.com/file/d/1SjmiZ6-E9oYAWGdsZK1GUhb1tT-hewmf/view?usp=sharing(Add screenshot 3 here with proper name)
+*Add caption explaining what this shows*
+
+
+
+
+
+
+### Project Demo
+# Video
+https://drive.google.com/file/d/1U_j4Dg7ew002cxANpwCdT_wPZNml-ewt/view?usp=sharing
+*Explain what the video demonstrates*
+
+
+
+
+---
+Made with ❤️ at TinkerHub Useless Projects 
+
+![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
+![Static Badge](https://img.shields.io/badge/UselessProjects--25-25?link=https%3A%2F%2Fwww.tinkerhub.org%2Fevents%2FQ2Q1TQKX6Q%2FUseless%2520Projects)
