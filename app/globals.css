@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #E8EAF6; /* Lavender Mist */
+  --foreground: #333333; /* Dark Gray */
+  --primary: #9FA8DA; /* Pastel Indigo */
+  --primary-foreground: #333333;
+  --secondary: #F8BBD0; /* Soft Rose */
+  --secondary-foreground: #333333;
+  --highlight: #CE93D8; /* Dusty Lilac */
+  --card: rgba(255, 255, 255, 0.6);
+  --card-foreground: #333333;
+  --border: rgba(159, 168, 218, 0.4); /* Pastel Indigo with alpha */
+}
+
+body {
+  background-color: var(--background);
+}
+
+.glass-morphism-light {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(159, 168, 218, 0.2); /* Shadow from Pastel Indigo */
+}
+
+.breathing-animation {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+}
