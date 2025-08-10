@@ -39,10 +39,10 @@ For Software:
 npm install
 node install 
 
-# Run
-npm dev
-nove -v 
-npm -v 
+
+
+ 
+
 
 
 ### Project Documentation
