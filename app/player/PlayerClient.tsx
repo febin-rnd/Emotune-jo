@@ -10,13 +10,13 @@ import LayoutWrapper from "@/components/layout-wrapper"
 import EmotionCard from "@/components/emotion-card"
 import BackgroundMorph from "@/components/background-morph"
 import { Song } from "@/entities/song"
-import SpotifyEmotionSync from "@/components/spotify-emotion-sync"
-import { analyzeSpotifyTrack, analyzeUploadedFile } from "@/utils/emotion-analyzer"
+import YoutubeEmotionSync from "@/components/youtube-emotion-sync"
+import { analyzeYoutubeTrack, analyzeUploadedFile } from "@/utils/emotion-analyzer"
 
 export default function PlayerClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const mode = searchParams.get("mode") || "upload"
+  const mode = searchParams?.get("mode") || "upload"
 
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -26,11 +26,19 @@ export default function PlayerClient() {
   const [volume, setVolume] = useState([80])
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
   const [songData, setSongData] = useState<any>(null)
-  const [spotifyUrl, setSpotifyUrl] = useState<string | null>(null)
-  const [spotifyIsPlaying, setSpotifyIsPlaying] = useState(true)
+  const [youtubeUrl, setYoutubeUrl] = useState<string | null>(null)
+  const [youtubeIsPlaying, setYoutubeIsPlaying] = useState(true)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Load song data
   useEffect(() => {
+    if (!isClient) return
+
     async function loadSong() {
       if (mode === "upload") {
         const fileData = sessionStorage.getItem("uploadedFile")
@@ -67,18 +75,18 @@ export default function PlayerClient() {
             emotion_data: emotions,
           })
         }
-      } else if (mode === "spotify") {
-        const url = sessionStorage.getItem("spotifyUrl")
+      } else if (mode === "youtube") {
+        const url = sessionStorage.getItem("youtubeUrl")
         if (url) {
-          setSpotifyUrl(url)
+          setYoutubeUrl(url)
 
-          // Analyze emotions based on Spotify URL
-          const emotions = analyzeSpotifyTrack(url)
+          // Analyze emotions based on YouTube URL
+          const emotions = analyzeYoutubeTrack(url)
 
           setSongData({
-            title: "Spotify Track",
-            artist: "Spotify",
-            spotify_url: url,
+            title: "YouTube Video",
+            artist: "YouTube",
+            youtube_url: url,
             emotion_data: emotions,
           })
 
@@ -88,16 +96,16 @@ export default function PlayerClient() {
           }
 
           await Song.create({
-            title: "Spotify Track",
-            artist: "Spotify",
-            spotify_url: url,
+            title: "YouTube Video",
+            artist: "YouTube",
+            youtube_url: url,
             emotion_data: emotions,
           })
         }
       }
     }
     loadSong()
-  }, [mode])
+  }, [mode, isClient])
 
   // Update current emotion based on time for uploaded files
   useEffect(() => {
@@ -112,12 +120,12 @@ export default function PlayerClient() {
     if (currentEmotionData && currentEmotionData.lyric !== currentEmotion?.lyric) {
       setCurrentEmotion(currentEmotionData)
     }
-  }, [currentTime, mode, songData])
+  }, [currentTime, mode, songData, currentEmotion])
 
-  // Handle Spotify emotion changes
-  const handleSpotifyEmotionChange = useCallback(
+  // Handle YouTube emotion changes
+  const handleYoutubeEmotionChange = useCallback(
     (emotion: any) => {
-      if (mode === "spotify" && emotion.lyric !== currentEmotion?.lyric) {
+      if (mode === "youtube" && emotion.lyric !== currentEmotion?.lyric) {
         setCurrentEmotion(emotion)
       }
     },
@@ -147,7 +155,8 @@ export default function PlayerClient() {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`
   }
 
-  if (!songData) {
+  // Show loading state while client-side hydration happens
+  if (!isClient || !songData) {
     return (
       <LayoutWrapper>
         <div className="min-h-screen flex items-center justify-center">
@@ -178,31 +187,31 @@ export default function PlayerClient() {
             />
           )}
 
-          {mode === "spotify" && songData && spotifyUrl && (
-            <SpotifyEmotionSync
+          {mode === "youtube" && songData && youtubeUrl && (
+            <YoutubeEmotionSync
               emotionData={songData.emotion_data || []}
-              onEmotionChange={handleSpotifyEmotionChange}
-              isPlaying={spotifyIsPlaying}
-              spotifyUrl={spotifyUrl}
+              onEmotionChange={handleYoutubeEmotionChange}
+              isPlaying={youtubeIsPlaying}
+              youtubeUrl={youtubeUrl}
             />
           )}
 
-          {mode === "spotify" && spotifyUrl && (
+          {mode === "youtube" && youtubeUrl && (
             <div className="mb-8 text-center">
               <div className="mb-4">
                 <Button
-                  onClick={() => setSpotifyIsPlaying(!spotifyIsPlaying)}
-                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full"
+                  onClick={() => setYoutubeIsPlaying(!youtubeIsPlaying)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full"
                 >
-                  {spotifyIsPlaying ? <Pause className="w-5 h-5 mr-2" /> : <Play className="w-5 h-5 mr-2" />}
-                  {spotifyIsPlaying ? "Pause Emotion Sync" : "Start Emotion Sync"}
+                  {youtubeIsPlaying ? <Pause className="w-5 h-5 mr-2" /> : <Play className="w-5 h-5 mr-2" />}
+                  {youtubeIsPlaying ? "Pause Emotion Sync" : "Start Emotion Sync"}
                 </Button>
               </div>
               <iframe
-                title="Spotify Player"
-                src={`https://open.spotify.com/embed/track/${spotifyUrl.split("/track/")[1]?.split("?")[0]}`}
+                title="YouTube Player"
+                src={`https://www.youtube.com/embed/${extractYouTubeId(youtubeUrl)}`}
                 width="340"
-                height="380"
+                height="190"
                 frameBorder="0"
                 allowFullScreen
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -271,7 +280,9 @@ export default function PlayerClient() {
                       <Info className="w-4 h-4 text-gray-400 cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Emotions change automatically as the song progresses. Use the button above to control sync.</p>
+                      <p>
+                        Emotions change automatically as the video progresses. Use the button above to control sync.
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -298,4 +309,11 @@ export default function PlayerClient() {
       </div>
     </LayoutWrapper>
   )
+}
+
+// Helper function to extract YouTube video ID
+function extractYouTubeId(url: string): string {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  const match = url.match(regExp)
+  return match && match[2].length === 11 ? match[2] : ""
 }
