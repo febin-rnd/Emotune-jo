@@ -33,16 +33,8 @@ For Software:
 
 
 
-### Implementation
+
 For Software:
-# Installation
-npm install
-node install 
-
-
-
- 
-
 
 
 ### Project Documentation
