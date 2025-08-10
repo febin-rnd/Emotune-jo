@@ -33,8 +33,16 @@ For Software:
 
 
 
-
+### Implementation
 For Software:
+# Installation
+npm install
+node install 
+
+# Run
+npm dev
+nove -v 
+npm -v 
 
 
 ### Project Documentation
