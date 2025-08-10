@@ -13,6 +13,13 @@ import { Song } from "@/entities/song"
 import YoutubeEmotionSync from "@/components/youtube-emotion-sync"
 import { analyzeYoutubeTrack, analyzeUploadedFile } from "@/utils/emotion-analyzer"
 
+// Helper function to extract YouTube video ID
+function extractYouTubeId(url: string): string {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  const match = url.match(regExp)
+  return match && match[2].length === 11 ? match[2] : ""
+}
+
 export default function PlayerClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -309,11 +316,4 @@ export default function PlayerClient() {
       </div>
     </LayoutWrapper>
   )
-}
-
-// Helper function to extract YouTube video ID
-function extractYouTubeId(url: string): string {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-  const match = url.match(regExp)
-  return match && match[2].length === 11 ? match[2] : ""
 }
